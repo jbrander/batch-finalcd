@@ -39,10 +39,17 @@ func main() {
 
 func resizeWindow(ctx context.Context) {
 	runtime.WindowExecJS(ctx, `
-	setTimeout(async () => {
-		const root = document.documentElement;
-		let boundingRect = root.getBoundingClientRect();
-		await window.go.main.App.ResizeWindow(boundingRect.width, boundingRect.height);
-	}, 100); 
+		setTimeout(async () => {
+			const root = document.documentElement;
+			let boundingClientRect = root.getBoundingClientRect();
+
+			// heightDelta is the difference between the height of the content and the height of the
+			// window - when resizing the window to fit the content we need to make it this much bigger
+			// than the content
+			let heightDelta = boundingClientRect.height-root.clientHeight;
+
+			await window.runtime.WindowSetMinSize(boundingClientRect.width, boundingClientRect.height+heightDelta);
+			await window.go.main.App.ResizeWindow(boundingClientRect.width, boundingClientRect.height+heightDelta);
+		}, 100); 
 	`)
 }
