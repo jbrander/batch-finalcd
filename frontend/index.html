@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+  <head>
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline'">
+    <meta charset="UTF-8" />
+    <title>FinalCD Batch Frontend</title>
+  </head>
+  <body class="bg-gray-100 dark:bg-gray-900">
+    <div class="container mx-auto p-4">
+
+      <div class="grid grid-cols-[auto,max-content] gap-4 mb-4">
+        <div class="h-full">
+          <label for="batchFiles" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Input Files</label>
+          <select id="batchFiles" name="batchFiles" size="8" multiple class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></select>
+        </div>
+        <div class="flex flex-col items-stretch justify-start gap-2 pt-7">
+          <button id="addFiles" type="button" class="py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Add</button>
+          <button id="removeFiles" type="button" class="py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Remove</button>
+        </div>
+      </div>
+
+      <div class="mb-4 gap-2">
+        <label for="outFile" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Output Directory</label>
+        <div class="flex">
+          <input type="text" id="outFile" class="rounded-none rounded-s-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-1.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="">
+          <button id="outDialog" class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-s-0 border-gray-300 rounded-e-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">...</button>
+        </div>
+      </div>
+
+      <div class="flex items-center mb-4">
+        <label class="inline-flex items-center cursor-pointer">
+          <input id="thirtyTwoBitOutput" type="checkbox" value="" class="sr-only peer">
+          <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600 dark:peer-checked:bg-blue-600"></div>
+          <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">32-bit output</span>
+        </label>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4 mb-4">
+        <fieldset class="p-4 border border-gray-200 rounded-lg dark:border-gray-700">
+          <legend class="text-sm font-medium text-gray-900 dark:text-white">Filter</legend>
+          <div class="flex items-center mb-4">
+              <input id="filterSharp" type="radio" name="filter" value="/f0" class="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600" >
+              <label for="filterSharp" class="block ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                Sharp filter (100Hz transition)
+              </label>
+          </div>
+          <div class="flex items-center mb-4">
+              <input id="filterGentle" type="radio" name="filter" value="/f1" class="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600" checked>
+              <label for="filterGentle" class="block ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                Gentle filter
+              </label>
+          </div>
+          <div class="flex items-center">
+              <input id="filterAlt" type="radio" name="filter" value="/f2" class="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600">
+              <label for="filterAlt" class="block ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                Alternative (Gold/Steep)
+              </label>
+          </div>
+        </fieldset>
+
+        <fieldset class="p-4 border border-gray-200 rounded-lg dark:border-gray-700">
+          <legend class="text-sm font-medium text-gray-900 dark:text-white">Dither</legend>
+          <div class="flex items-center mb-4">
+            <input id="ditherNo" type="radio" name="dither" value="/d0" class="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600" checked>
+            <label for="ditherNo" class="block ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+              No Dither
+            </label>
+          </div>
+          <div class="flex items-center">
+            <input id="ditherTPDF" type="radio" name="dither" value="/d1" class="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600">
+            <label for="ditherTPDF" class="block ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+              TPDF Dither
+            </label>
+          </div>
+        </fieldset>
+      </div>
+
+      <div class="grid grid-cols-2  mb-2">
+        <div class="flex items-center">
+          <label for="gainBox" class="text-sm font-medium text-gray-900 dark:text-white me-2">Gain</label>
+          <input type="text" id="gainBox" value="1.0" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-20 mb-4 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-right">
+          <span class="ms-2 text-sm text-gray-500 dark:text-gray-400">(e.g. 2.0 gives ~+6dB)</span>
+        </div>
+        <div class="flex justify-center items-center">
+          <button id="convertButton" type="button" class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-lg px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-green-800">Convert!</button>
+        </div>
+      </div>
+
+      <div class="mb-2">
+        <div id="outputLog" class="block p-2.5 w-full h-full text-sm rounded-lg border border-gray-300 bg-gray-50 dark:bg-gray-700 dark:border-gray-600" style="height: 15em; overflow-y: auto;"></div>
+      </div>
+
+    </div>
+    <script src="src/main.js" type="module"></script>
+  </body>
+</html>
