@@ -15,7 +15,6 @@ const addFilesBtn = document.getElementById('addFiles');
 const removeFilesBtn = document.getElementById('removeFiles');
 const outDialogBtn = document.getElementById('outDialog');
 const convertBtn = document.getElementById('convertButton');
-const paramBox = document.getElementById('paramBox');
 const gainBox = document.getElementById('gainBox');
 const thirtyTwoBitOutput = document.getElementById('thirtyTwoBitOutput');
 
@@ -108,7 +107,7 @@ convertBtn.onclick = async () => {
       const result = await RunFinalCD(inputFilePath, outDir, options);
       outputLog.innerHTML += `<p style="font-family: monospace;">${result.Stdout.replace(/\r?\n|\r/g, "<br>")}</p>`;
       if (result.Success) {
-        outputLog.innerHTML += `<p><span style="font-weight:bold; color:green;">Processed ${result.InputFileName} -> ${result.OutputFilePath}</span></p><hr>`;
+        outputLog.innerHTML += `<p><span style="font-weight:bold; color:green;">Successfully converted: ${result.OutputFilePath}</span></p><hr>`;
       } else {
         outputLog.innerHTML += `<p><span style="font-weight:bold; color:red;">Error processing ${result.InputFileName}: ${result.Err}</span></p><hr>`;
       }
